@@ -1,4 +1,4 @@
-import './App.css';
+import './assets/css/theme.css';
 import {TikTakView} from "./views/TikTakView";
 
 function App() {
