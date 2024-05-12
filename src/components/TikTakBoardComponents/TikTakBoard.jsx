@@ -3,7 +3,7 @@ import TikTakSquare from "./TikTakSquare";
 import {initBoard} from "../../helpers/constants";
 import {useState} from "react";
 
-export default function TikTakBoard({scale}) {
+export default function TikTakBoard({scale, selectedType, setSelectedType}) {
 
     const container = {
         hidden: {opacity: 0},
@@ -15,15 +15,7 @@ export default function TikTakBoard({scale}) {
                 staggerChildren: 0.3
             }
         }
-    };
-
-    const item = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1
-        }
-    };
+    };;
 
     return (
         <motion.div
