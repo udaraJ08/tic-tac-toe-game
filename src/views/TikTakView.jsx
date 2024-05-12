@@ -16,6 +16,6 @@ export function TikTakView() {
                      username={username}
                      setUsername={setUsername}
         />
-        <TikTakBoard scale={scale}/>
+        <TikTakBoard scale={scale} username={username} selectedType={selectedType}/>
     </div>
 }
