@@ -3,7 +3,7 @@ import TikTakSquare from "./TikTakSquare";
 import {initBoard} from "../../helpers/constants";
 import {useState} from "react";
 
-export default function TikTakBoard({scale, selectedType, setSelectedType}) {
+export default function TikTakBoard({scale}) {
 
     const container = {
         hidden: {opacity: 0},
