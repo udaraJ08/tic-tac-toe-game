@@ -1,6 +1,16 @@
 import {motion} from "framer-motion";
 import {socket} from "../../contexts/WebsocketContext";
 
+const container = {
+    hidden: {opacity: 0},
+    visible: {
+        opacity: 1,
+        transition: {
+            delay: 0.2,
+            staggerChildren: 0.3
+        }
+    }
+};
 const EmojiButtonSet = () => {
 
     const sendEmoji = (emoji) => {
@@ -8,7 +18,11 @@ const EmojiButtonSet = () => {
     };
 
     return (
-        <div className="flex flex-row overflow-x-auto space-x-4 p-4 mt-2">
+        <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-row overflow-x-auto space-x-4 p-4 mt-2">
             <motion.button
                 onClick={() => sendEmoji('😀')}
                 whileHover={{scale: 1.1}}
@@ -55,7 +69,7 @@ const EmojiButtonSet = () => {
                 🥳
             </motion.button>
             {/* Add more emoji buttons as needed */}
-        </div>
+        </motion.div>
     );
 };
 

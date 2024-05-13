@@ -21,6 +21,7 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
         if (comb.length > 0 && disable) {
             setCombination(checkWinner(init))
             socket.emit('winnerMsg', {username})
+            isDisable(true)
         }
     }, [init]);
 
@@ -34,7 +35,8 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
                 return updatedInit;
             });
 
-            if (!selectedType) setSelectedType(curType === PRIMARY ? SECONDARY : PRIMARY)
+            // alert(0)
+            // if (!selectedType) setSelectedType(curType === PRIMARY ? SECONDARY : PRIMARY)
 
             isDisable(message?.name?.toLowerCase()?.trim() === username?.toLowerCase()?.trim())
         })
@@ -47,11 +49,15 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
             audio.play()
 
             if (dis) setIsExploding(true)
-
+            isDisable(true)
         })
 
         socket.on("restartMsg", (data) => {
             setInit(initBoard)
+            setIsExploding(false)
+            setCombination([])
+            isDisable(false)
+            setSelectedType(null)
         })
 
         return () => {

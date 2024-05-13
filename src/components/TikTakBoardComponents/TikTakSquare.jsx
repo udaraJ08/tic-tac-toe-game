@@ -19,7 +19,7 @@ export default function TikTakSquare({ data, username, selectedType, combination
 
     const handleSquareBtn = () => {
 
-        if (disable) return;
+        if (disable || !selectedType) return;
 
         const audio = new Audio(clickAudio)
 
