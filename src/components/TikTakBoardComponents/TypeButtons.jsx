@@ -1,10 +1,18 @@
 import {motion} from "framer-motion";
 import {PRIMARY, SECONDARY} from "../../helpers/constants";
+import {socket} from "../../contexts/WebsocketContext";
 
 export default function TypeButtons({selectedType, setSelectedType}) {
 
     const isSelectedType = (type) => {
         return type === selectedType
+    }
+
+    const handleSelectedType = (type) => {
+        if (!selectedType) {
+            setSelectedType(type )
+            socket.emit('selectBtnTypeMsg', {type})
+        }
     }
 
     return (
@@ -20,7 +28,7 @@ export default function TypeButtons({selectedType, setSelectedType}) {
                 transition={{delay: 0.5}}
                 initial='hidden'
                 animate='visible'
-                onClick={() => setSelectedType(PRIMARY)}
+                onClick={() => handleSelectedType(PRIMARY)}
                 className={`w-50 ${!isSelectedType(PRIMARY) ? 'bg-zinc-900' : 'bg-sky-900' } text-center text-cyan-500 rounded-lg shadow-md h-20 d-center font-bold pointer`}
             >
                 <motion.button whileHover={{scale: 1.05}}
@@ -38,7 +46,7 @@ export default function TypeButtons({selectedType, setSelectedType}) {
                 transition={{delay: 0.5}}
                 initial='hidden'
                 animate='visible'
-                onClick={() => setSelectedType(SECONDARY)}
+                onClick={() => handleSelectedType(SECONDARY)}
                 className={`w-50 ${!isSelectedType(SECONDARY) ? 'bg-zinc-900' : 'bg-sky-900' } text-center text-cyan-500 rounded-lg shadow-md h-20 d-center font-bold pointer`}
             >
                 <motion.button whileHover={{scale: 1.05}}

@@ -4,7 +4,7 @@ import {Fragment} from "react";
 import {socket} from "../../contexts/WebsocketContext";
 import clickAudio from '../../assets/audio/bubble-sound.mp3'
 
-export default function TikTakSquare({ data, username, selectedType, combination, index }) {
+export default function TikTakSquare({ data, username, selectedType, combination, index, disable, isDisable }) {
 
     const handleType = () => {
         switch (data?.type) {
@@ -19,6 +19,8 @@ export default function TikTakSquare({ data, username, selectedType, combination
 
     const handleSquareBtn = () => {
 
+        if (disable) return;
+
         const audio = new Audio(clickAudio)
 
         audio.play()
@@ -30,6 +32,7 @@ export default function TikTakSquare({ data, username, selectedType, combination
         }
 
         socket.emit('userInput', cookedObj)
+        isDisable(true)
     }
 
     return (

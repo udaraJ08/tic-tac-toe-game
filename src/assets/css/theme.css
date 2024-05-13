@@ -30,21 +30,21 @@ p {
 /*webkit styles*/
 ::-webkit-scrollbar {
   width: 7px;
-  height: 7px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff2e4;
+  background: transparent;
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3de081;
+  background: #086ccc;
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2ecc71;
+  background: #04509a;
 }
 
 body {
@@ -404,7 +404,7 @@ body {
 }
 
 .overflow-hidden {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .overflow-auto {

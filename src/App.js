@@ -3,7 +3,7 @@ import {TikTakView} from "./views/TikTakView";
 
 function App() {
   return (
-    <div className="h-full">
+    <div className="h-full overflow-hidden">
       <TikTakView />
     </div>
   );

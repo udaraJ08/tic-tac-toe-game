@@ -1,3 +1,5 @@
+import {motion} from 'framer-motion'
+
 export default function FluidTextField({username, setUsername}) {
 
     const handleChange = (e) => {
@@ -5,7 +7,17 @@ export default function FluidTextField({username, setUsername}) {
     };
 
     return (
-        <input
+        <motion.input
+            variants={{
+                hidden: {y: 20, opacity: 0},
+                visible: {
+                    y: 0,
+                    opacity: 1
+                }
+            }}
+            transition={{delay: 0.5}}
+            initial='hidden'
+            animate='visible'
             type="text"
             value={username}
             onChange={handleChange}
