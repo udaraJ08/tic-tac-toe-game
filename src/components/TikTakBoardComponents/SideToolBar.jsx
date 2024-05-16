@@ -6,6 +6,7 @@ import FluidTextField from "./NameField";
 import HamburgerSVG from "../../assets/svg/HamburgurSVG";
 import {socket} from "../../contexts/WebsocketContext";
 import EmojiButtonSet from "./EmojiButtonSet";
+import ButtonsList from "./AudioBtnList";
 
 export default function SideToolBar({
                                         setScale,
@@ -40,7 +41,7 @@ export default function SideToolBar({
         >
             {!isCollapsed && (
                 <div className='flex flex-col h-full'>
-                    <div className='flex flex-col h-[95%]'>
+                    <div className='flex flex-col h-[95%] side-nav-content overflow-auto box-border'>
                         <Slider setScale={setScale} scale={scale} />
                         <TypeButtons
                             selectedType={selectedType}
@@ -48,6 +49,7 @@ export default function SideToolBar({
                         />
                         <FluidTextField username={username} setUsername={setUsername} />
                         <EmojiButtonSet />
+                        <ButtonsList />
                     </div>
                     <div className="w-full flex justify-center">
                         <motion.button

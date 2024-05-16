@@ -47,6 +47,14 @@ p {
   background: #04509a;
 }
 
+.btn-set::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-set::-webkit-scrollbar-thumb{
+  display: none;
+}
+
 body {
   background-color: #f9fafe;
 }
