@@ -971,6 +971,10 @@ body {
   position: sticky !important;
 }
 
+.first-col-grad {
+  background-image: linear-gradient(to right bottom, #051937, #121434, #1b0f2f, #220729, #270022);
+}
+
 @media all and (max-width: 540px) {
   .width-24 {
     width: 100%;
