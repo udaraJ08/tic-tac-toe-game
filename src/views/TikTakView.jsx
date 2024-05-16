@@ -4,6 +4,8 @@ import SideToolBar from "../components/TikTakBoardComponents/SideToolBar";
 import {socket} from "../contexts/WebsocketContext";
 import {PRIMARY, SECONDARY} from "../helpers/constants";
 import EmojiFloat from "../components/TikTakBoardComponents/EmojiFloat";
+import {useLocation} from "react-router-dom";
+import FluidDiv from "../components/TikTakBoardComponents/CopyButton";
 
 export function TikTakView() {
 
@@ -12,7 +14,11 @@ export function TikTakView() {
     const [username, setUsername] = useState(null)
     const [emojiArr, setEmojiArr] = useState([])
 
+    const location = useLocation()
+
     useEffect(() => {
+        setUsername(location.state.name)
+
         socket.on("selectBtnTypeMsg", (data) => {
             const {message} = data
 
@@ -44,6 +50,7 @@ export function TikTakView() {
                      setUsername={setUsername}
         />
         <TikTakBoard scale={scale} username={username} selectedType={selectedType} setSelectedType={setSelectedType}/>
+        <FluidDiv />
         {
             emojiArr.map((e, index) => {
                 return <EmojiFloat emoji={e} key={index}/>

@@ -15,6 +15,7 @@ export default function FluidTextField({username, setUsername}) {
                     opacity: 1
                 }
             }}
+            disabled
             transition={{delay: 0.5}}
             initial='hidden'
             animate='visible'

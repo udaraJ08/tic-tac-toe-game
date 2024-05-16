@@ -1,5 +1,6 @@
 import {motion} from "framer-motion";
 import {socket} from "../../contexts/WebsocketContext";
+import {useLocation} from "react-router-dom";
 
 const container = {
     hidden: {opacity: 0},
@@ -13,8 +14,10 @@ const container = {
 };
 const EmojiButtonSet = () => {
 
+    const location = useLocation()
+
     const sendEmoji = (emoji) => {
-        socket.emit('shareEmojiMsg', {emoji})
+        socket.emit('shareEmojiMsg', {emoji, code: location.state.code})
     };
 
     return (

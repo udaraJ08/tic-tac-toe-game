@@ -41,7 +41,7 @@ export default function SideToolBar({
         >
             {!isCollapsed && (
                 <div className='flex flex-col h-full'>
-                    <div className='flex flex-col h-[95%] side-nav-content overflow-auto box-border'>
+                    <div className='flex flex-col h-[95%] side-nav-content overflow-y-auto overflow-x-hidden box-border'>
                         <Slider setScale={setScale} scale={scale} />
                         <TypeButtons
                             selectedType={selectedType}
@@ -51,7 +51,7 @@ export default function SideToolBar({
                         <EmojiButtonSet />
                         <ButtonsList />
                     </div>
-                    <div className="w-full flex justify-center">
+                    <div className="w-full flex justify-center gap-3">
                         <motion.button
                             onClick={restartGame}
                             className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-md shadow-md"
@@ -61,6 +61,17 @@ export default function SideToolBar({
                             whileTap={{ scale: 0.9 }}
                         >
                             NEW GAME
+                        </motion.button>
+
+                        <motion.button
+                            onClick={restartGame}
+                            className="px-6 py-3 bg-gradient-to-r from-rose-700 to-rose-500 text-white rounded-md shadow-md"
+                            animate={{ opacity: 1, translateY: 0, animationDelay: 1 }}
+                            initial={{ opacity: 0, translateY: 4 }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
+                            HOME
                         </motion.button>
                     </div>
                 </div>

@@ -1,11 +1,34 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {useNavigate} from "react-router-dom";
+import randomstring from "randomstring";
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
+import {socket} from "../../contexts/WebsocketContext";
 
 const HomePageView = () => {
     const [showJoinForm, setShowJoinForm] = useState(false);
+    const [roomCode, setRoomCode] = useState('');
 
-    const handleJoinClick = () => {
-        setShowJoinForm(true);
+    const navigate = useNavigate()
+
+
+    const handleJoinClick = (code, isHost) => {
+
+        if (!code) {
+            alert('Not today son !')
+            return;
+        }
+
+        const roomName = randomstring.generate(7)
+
+        socket.emit('connectRoom', roomName)
+
+        navigate(`/game-room`, {
+            state: {
+                name: code,
+                code: isHost ? roomName : roomCode
+            }
+        });
     };
 
     const handleCancelClick = () => {
@@ -73,7 +96,7 @@ const HomePageView = () => {
                                     exit={{ x: '-100%', opacity: 0 }}
                                     whileTap={{ scale: 0.9 }}
                                     whileHover={{ scale: 1.06 }}
-                                    onClick={handleJoinClick}
+                                    onClick={() => handleJoinClick(uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: ' ', }), true)}
                                     className="bg-black w-25 py-5 px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
                                 >
                                     HOST NEW GAME
@@ -85,7 +108,7 @@ const HomePageView = () => {
                                     exit={{ x: '100%', opacity: 0 }}
                                     whileTap={{ scale: 0.9 }}
                                     whileHover={{ scale: 1.06 }}
-                                    onClick={handleJoinClick}
+                                    onClick={() => setShowJoinForm(true)}
                                     className="bg-black w-25 py-5 px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
                                 >
                                     JOIN A GAME
@@ -99,6 +122,7 @@ const HomePageView = () => {
                                     animate={{ x: 0, opacity: 1 }}
                                     exit={{ x: '-100%', opacity: 0 }}
                                     type="text"
+                                    onChange={e => setRoomCode(e.target.value)}
                                     placeholder="Enter game code"
                                     className="border border-none bg-white shadow-lg rounded-md px-2 py-1 outline-none text-lg"
                                 />
@@ -106,7 +130,7 @@ const HomePageView = () => {
                                     key="joinBtn"
                                     whileTap={{ scale: 0.9 }}
                                     whileHover={{ scale: 1.06 }}
-                                    onClick={() => alert('Joining a game')}
+                                    onClick={() => handleJoinClick(roomCode, false)}
                                     className="bg-black py-5 text-center px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
                                 >
                                     JOIN
