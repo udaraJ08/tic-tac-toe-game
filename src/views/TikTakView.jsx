@@ -6,6 +6,7 @@ import {PRIMARY, SECONDARY} from "../helpers/constants";
 import EmojiFloat from "../components/TikTakBoardComponents/EmojiFloat";
 import {useLocation} from "react-router-dom";
 import FluidDiv from "../components/TikTakBoardComponents/CopyButton";
+import IceSVG from "../assets/svg/IceSVG";
 
 export function TikTakView() {
 
@@ -51,6 +52,9 @@ export function TikTakView() {
         />
         <TikTakBoard scale={scale} username={username} selectedType={selectedType} setSelectedType={setSelectedType}/>
         <FluidDiv />
+        {/*<div className='absolute right-0 bottom-[-100px]'>*/}
+        {/*    <IceSVG />*/}
+        {/*</div>*/}
         {
             emojiArr.map((e, index) => {
                 return <EmojiFloat emoji={e} key={index}/>
