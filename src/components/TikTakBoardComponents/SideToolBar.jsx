@@ -1,5 +1,5 @@
 import { motion, useAnimation } from "framer-motion";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Slider from "./Slider";
 import TypeButtons from "./TypeButtons";
 import FluidTextField from "./NameField";
@@ -8,6 +8,8 @@ import {socket} from "../../contexts/WebsocketContext";
 import EmojiButtonSet from "./EmojiButtonSet";
 import ButtonsList from "./AudioBtnList";
 import {useLocation, useNavigate} from "react-router-dom";
+import CollapseSVG from "../../assets/svg/CollapseSVG";
+import FullScreenSVG from "../../assets/svg/FullScreenSVG";
 
 export default function SideToolBar({
                                         setScale,
@@ -18,9 +20,15 @@ export default function SideToolBar({
                                         setUsername
                                     }) {
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false)
+
     const controls = useAnimation();
     const location = useLocation();
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setIsFullScreen(!!document.fullscreenElement)
+    }, []);
 
 
     const toggleSidebar = () => {
@@ -57,6 +65,16 @@ export default function SideToolBar({
             return "55%";
         } else {
             return "100%";
+        }
+    }
+
+    const handleFullScreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            setIsFullScreen(true)
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+            setIsFullScreen(false)
         }
     }
 
@@ -122,6 +140,21 @@ export default function SideToolBar({
                 className={`absolute top-0 right-[0] sm:m-0 lg:m-2 p-1 rounded-md bg-indigo-300 shadow-md`}
             >
                 <HamburgerSVG />
+            </motion.button>
+            <motion.button
+                variants={{
+                    hidden: {scale: 0},
+                    visible: {
+                        scale: 1
+                    }
+                }}
+                transition={{delay: 1}}
+                initial='hidden'
+                animate='visible'
+                onClick={handleFullScreen}
+                className={`absolute top-12 right-[0] sm:m-0 lg:m-2 p-1 rounded-md ${isFullScreen ? 'bg-rose-400' : 'bg-green-400'} shadow-md`}
+            >
+                {isFullScreen ? <CollapseSVG /> : <FullScreenSVG/>}
             </motion.button>
         </motion.div>
     );

@@ -120,7 +120,7 @@ const HomePageView = () => {
                                 </motion.button>
                             </>
                         ) : (
-                            <div className="flex gap-2">
+                            <div className="flex flex-wrap gap-2 d-center">
                                 <motion.input
                                     key="input"
                                     initial={{ x: '-100%', opacity: 0 }}
@@ -129,26 +129,28 @@ const HomePageView = () => {
                                     type="text"
                                     onChange={e => setRoomCode(e.target.value)}
                                     placeholder="Enter game code"
-                                    className="border border-none bg-white shadow-lg rounded-md px-2 py-1 outline-none text-lg"
+                                    className="border border-none bg-white shadow-lg rounded-md px-2 py-5 outline-none text-lg"
                                 />
-                                <motion.button
-                                    key="joinBtn"
-                                    whileTap={{ scale: 0.9 }}
-                                    whileHover={{ scale: 1.06 }}
-                                    onClick={() => handleJoinClick(roomCode, false)}
-                                    className="bg-black py-5 text-center px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
-                                >
-                                    JOIN
-                                </motion.button>
-                                <motion.button
-                                    key="cancelBtn"
-                                    whileTap={{ scale: 0.9 }}
-                                    whileHover={{ scale: 1.06 }}
-                                    onClick={handleCancelClick}
-                                    className="bg-rose-800 shadow-lg px-4 text-center py-5 rounded-md duration-75 hover:px-16 text-white text-lg"
-                                >
-                                    X
-                                </motion.button>
+                                <div className='flex gap-1'>
+                                    <motion.button
+                                        key="joinBtn"
+                                        whileTap={{ scale: 0.9 }}
+                                        whileHover={{ scale: 1.06 }}
+                                        onClick={() => handleJoinClick(roomCode, false)}
+                                        className="bg-black py-5 text-center px-8 lg:px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
+                                    >
+                                        JOIN
+                                    </motion.button>
+                                    <motion.button
+                                        key="cancelBtn"
+                                        whileTap={{ scale: 0.9 }}
+                                        whileHover={{ scale: 1.06 }}
+                                        onClick={handleCancelClick}
+                                        className="bg-rose-800 shadow-lg  px-8 px-4 text-center py-5 rounded-md duration-75 hover:px-16 text-white text-lg"
+                                    >
+                                        X
+                                    </motion.button>
+                                </div>
                             </div>
                         )}
                     </AnimatePresence>
