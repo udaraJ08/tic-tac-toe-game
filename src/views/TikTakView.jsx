@@ -13,7 +13,7 @@ import {
     YAY_EFFECT
 } from "../helpers/constants";
 import EmojiFloat from "../components/TikTakBoardComponents/EmojiFloat";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import FluidDiv from "../components/TikTakBoardComponents/CopyButton";
 import haha from '../assets/audio/haha.mp3'
 import cool from '../assets/audio/cool.mp3'
@@ -22,6 +22,7 @@ import thinking from '../assets/audio/haha.mp3'
 import yay from '../assets/audio/yay.mp3'
 import ohh from '../assets/audio/ohh.mp3'
 import copyAudio from '../assets/audio/copy.mp3'
+import {toast} from "react-toastify";
 
 export function TikTakView() {
 
@@ -33,7 +34,22 @@ export function TikTakView() {
     const location = useLocation()
 
     useEffect(() => {
-        setUsername(location.state.name)
+        const removeTheCheater = () => {
+            socket.emit('pageRefresh', {
+                code: location?.state?.code,
+                name: username
+            });
+        };
+
+        window.addEventListener('beforeunload', removeTheCheater);
+
+        return () => {
+            window.removeEventListener('beforeunload', removeTheCheater);
+        };
+    }, []);
+
+    useEffect(() => {
+        setUsername(location?.state?.name)
 
         socket.on("selectBtnTypeMsg", (data) => {
             const {message} = data
@@ -81,19 +97,10 @@ export function TikTakView() {
             audio.play()
         })
 
-        socket.on("connectRoom", async data => {
-            const shallow = [...emojiArr]
-            shallow.push(`${data} connected`)
-            setEmojiArr(shallow)
-            const audio = new Audio(copyAudio)
-            await audio.play()
-        })
-
         return () => {
             socket.off('selectBtnTypeMsg')
             socket.off('shareEmojiMsg')
             socket.off('audioEffects')
-            socket.off('connectRoom')
         }
     }, [selectedType, emojiArr]);
 

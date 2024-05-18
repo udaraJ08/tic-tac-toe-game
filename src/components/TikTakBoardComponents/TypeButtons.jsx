@@ -1,8 +1,11 @@
 import {motion} from "framer-motion";
 import {PRIMARY, SECONDARY} from "../../helpers/constants";
 import {socket} from "../../contexts/WebsocketContext";
+import {useLocation} from "react-router-dom";
 
 export default function TypeButtons({selectedType, setSelectedType}) {
+
+    const location = useLocation()
 
     const isSelectedType = (type) => {
         return type === selectedType
@@ -11,7 +14,7 @@ export default function TypeButtons({selectedType, setSelectedType}) {
     const handleSelectedType = (type) => {
         if (!selectedType) {
             setSelectedType(type )
-            socket.emit('selectBtnTypeMsg', {type})
+            socket.emit('selectBtnTypeMsg', {type, code: location.state.code})
         }
     }
 

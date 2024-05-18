@@ -17,7 +17,7 @@ const EmojiButtonSet = () => {
     const location = useLocation()
 
     const sendEmoji = (emoji) => {
-        socket.emit('shareEmojiMsg', {emoji, code: location.state.code})
+        socket.emit('shareEmojiMsg', {emoji, code: location?.state?.code})
     };
 
     return (

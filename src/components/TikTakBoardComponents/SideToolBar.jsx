@@ -28,11 +28,17 @@ export default function SideToolBar({
     };
 
     const restartGame = () => {
-        socket.emit('restartMsg')
+        socket.emit('restartMsg', {
+            username,
+            code: location?.state?.code,
+        })
     };
 
     const backToHome = () => {
-        socket.emit('playerLeft', location.state.code)
+        socket.emit('playerLeft', {
+            code: location?.state?.code,
+            name: username
+        })
         navigate('/', {
             replace: true
         })

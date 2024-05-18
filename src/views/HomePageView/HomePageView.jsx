@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import randomstring from "randomstring";
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import {socket} from "../../contexts/WebsocketContext";
+import {toast} from "react-toastify";
 
 const HomePageView = () => {
     const [showJoinForm, setShowJoinForm] = useState(false);
@@ -15,17 +16,18 @@ const HomePageView = () => {
     const handleJoinClick = (code, isHost) => {
 
         if (!code) {
-            alert('Not today son !')
+            toast.error('Not today son !')
             return;
         }
 
         const roomName = randomstring.generate(7)
+        const player = isHost ? code : uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: ' ', })
 
-        socket.emit('connectRoom', isHost ? `${roomName}-${code}` : `${roomCode}-${code}`)
+        socket.emit('connectRoom', isHost ? `${roomName}-${player}` : `${roomCode}-${player}`)
 
         navigate(`/game-room`, {
             state: {
-                name: code,
+                name: player,
                 code: isHost ? roomName : roomCode
             },
             replace: true

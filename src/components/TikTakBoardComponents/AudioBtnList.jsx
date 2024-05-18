@@ -13,7 +13,7 @@ const Button = ({ emoji, title, sound, gradient, type }) => {
             setIsClicked(true);
             socket.emit('audioEffects', {
                 name: type,
-                code: location.state.code
+                code: location?.state?.code
             });
             setTimeout(() => {
                 setIsClicked(false);

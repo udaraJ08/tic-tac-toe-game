@@ -24,8 +24,8 @@ const FluidDiv = () => {
     }, [copyTriggered]);
 
     const handleCopyTheCode = () => {
-        window.navigator.clipboard.writeText(location.state.code);
-        socket.emit('shareEmojiMsg', { emoji: 'Share the love ❤️', code: location.state.code });
+        window.navigator.clipboard.writeText(location?.state?.code);
+        socket.emit('shareEmojiMsg', { emoji: 'Share the love ❤️', code: location?.state?.code });
         setCopyTriggered(true);
     };
 
@@ -50,7 +50,7 @@ const FluidDiv = () => {
             initial="hidden"
             animate="visible"
         >
-            <div className="text-lg text-black mr-2">{location.state.code}</div>
+            <div className="text-lg text-black mr-2">{location?.state?.code}</div>
             <motion.button
                 onClick={handleCopyTheCode}
                 whileHover={{ scale: 1.1 }}

@@ -2,6 +2,8 @@ import './assets/css/theme.css';
 import {TikTakView} from "./views/TikTakView";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomePageView from "./views/HomePageView/HomePageView";
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
               />
           </Routes>
       </BrowserRouter>
+      <ToastContainer hideProgressBar position='bottom-right'/>
     </div>
   );
 }

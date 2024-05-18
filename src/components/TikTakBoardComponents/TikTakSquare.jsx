@@ -3,8 +3,11 @@ import { PRIMARY, SECONDARY } from "../../helpers/constants";
 import {Fragment} from "react";
 import {socket} from "../../contexts/WebsocketContext";
 import clickAudio from '../../assets/audio/bubble-sound.mp3'
+import {useLocation} from "react-router-dom";
 
 export default function TikTakSquare({ data, username, selectedType, combination, index, disable, isDisable }) {
+
+    const location = useLocation()
 
     const handleType = () => {
         switch (data?.type) {
@@ -28,7 +31,8 @@ export default function TikTakSquare({ data, username, selectedType, combination
         const cookedObj = {
             ...data,
             name: username,
-            type: selectedType
+            type: selectedType,
+            code: location?.state?.code
         }
 
         socket.emit('userInput', cookedObj)

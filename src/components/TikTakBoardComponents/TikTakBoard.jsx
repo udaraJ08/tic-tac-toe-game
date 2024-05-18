@@ -7,6 +7,9 @@ import {checkWinner} from "../../helpers/utils";
 import winnerAudio from '../../assets/audio/winner.mp3';
 import boo from '../../assets/audio/boo.mp3';
 import ConfettiExplosion from "react-confetti-explosion";
+import {toast} from "react-toastify";
+import copyAudio from "../../assets/audio/copy.mp3";
+import {useLocation} from "react-router-dom";
 
 export default function TikTakBoard({scale, username, selectedType, setSelectedType}) {
 
@@ -15,12 +18,22 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
     const [combination, setCombination] = useState([])
     const [disable, isDisable] = useState(false)
 
+    const location = useLocation()
+
+    const restartGame = () => {
+        setInit(initBoard)
+        setIsExploding(false)
+        setCombination([])
+        isDisable(false)
+        setSelectedType(null)
+    }
+
     useMemo(() => {
         const comb = checkWinner(init)
 
         if (comb.length > 0 && disable) {
             setCombination(checkWinner(init))
-            socket.emit('winnerMsg', {username})
+            socket.emit('winnerMsg', {username, code: location?.state.code})
             isDisable(true)
         }
     }, [init]);
@@ -53,17 +66,34 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
         })
 
         socket.on("restartMsg", (data) => {
-            setInit(initBoard)
-            setIsExploding(false)
-            setCombination([])
-            isDisable(false)
-            setSelectedType(null)
+            toast.error(`${data} restart the game`)
+            restartGame()
+        })
+
+        socket.on("connectRoom", async data => {
+            toast.success(`${data} joined`)
+            const audio = new Audio(copyAudio)
+            await audio.play()
+            restartGame()
+        })
+
+        socket.on('playerLeft', (data) => {
+            toast.error(`${data} left the game`)
+            restartGame()
+        })
+
+        socket.on("pageRefresh", (player) => {
+            toast.error(`Other player restart the game`)
+            restartGame()
         })
 
         return () => {
             socket.off('userInput')
             socket.off('winnerMsg')
             socket.off('resetMsg')
+            socket.off('connectRoom')
+            socket.off('playerLeft')
+            socket.off('pageRefresh')
         }
     }, [username]);
 
