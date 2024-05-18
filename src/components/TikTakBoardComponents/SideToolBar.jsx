@@ -22,6 +22,7 @@ export default function SideToolBar({
     const location = useLocation();
     const navigate = useNavigate()
 
+
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
         controls.start(isCollapsed ? "visible" : "hidden");

@@ -19,7 +19,6 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
     const [disable, isDisable] = useState(false)
 
     const location = useLocation()
-    const navigate = useNavigate()
 
     const restartGame = () => {
         setInit(initBoard)

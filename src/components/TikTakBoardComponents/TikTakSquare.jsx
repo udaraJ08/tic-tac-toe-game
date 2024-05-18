@@ -4,6 +4,7 @@ import {Fragment} from "react";
 import {socket} from "../../contexts/WebsocketContext";
 import clickAudio from '../../assets/audio/bubble-sound.mp3'
 import {useLocation} from "react-router-dom";
+import {toast} from "react-toastify";
 
 export default function TikTakSquare({ data, username, selectedType, combination, index, disable, isDisable }) {
 
@@ -22,7 +23,15 @@ export default function TikTakSquare({ data, username, selectedType, combination
 
     const handleSquareBtn = () => {
 
-        if (disable || !selectedType) return;
+        if (disable) {
+            toast.error("Hold your horses. It's not your turn.")
+            return
+        }
+
+        if (!selectedType) {
+            toast.error("You have to select 'X' or 'O'")
+            return
+        }
 
         const audio = new Audio(clickAudio)
 
