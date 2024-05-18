@@ -32,13 +32,26 @@ export function TikTakView() {
     const [emojiArr, setEmojiArr] = useState([])
 
     const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
-        const removeTheCheater = () => {
+
+        if (!localStorage.getItem('player') || localStorage.getItem('player') === null) navigate('/', {
+            replace: true
+        })
+
+        const removeTheCheater = (event) => {
             socket.emit('pageRefresh', {
                 code: location?.state?.code,
                 name: username
             });
+
+            toast.error("Kicked from the lobby")
+
+            localStorage.removeItem('player')
+
+            event.preventDefault()
+            event.returnValue = 'You will be kicked to the lobby if you restart';
         };
 
         window.addEventListener('beforeunload', removeTheCheater);

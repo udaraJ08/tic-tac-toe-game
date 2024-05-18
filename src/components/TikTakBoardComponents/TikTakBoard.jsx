@@ -9,7 +9,7 @@ import boo from '../../assets/audio/boo.mp3';
 import ConfettiExplosion from "react-confetti-explosion";
 import {toast} from "react-toastify";
 import copyAudio from "../../assets/audio/copy.mp3";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export default function TikTakBoard({scale, username, selectedType, setSelectedType}) {
 
@@ -19,6 +19,7 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
     const [disable, isDisable] = useState(false)
 
     const location = useLocation()
+    const navigate = useNavigate()
 
     const restartGame = () => {
         setInit(initBoard)
@@ -57,7 +58,10 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
         socket.on("winnerMsg", (data) => {
             const {message} = data
 
-            const dis = message.username?.toLowerCase()?.trim() === username?.toLowerCase()?.trim()
+            console.log(message)
+            console.log(username)
+
+            const dis = message.toLowerCase()?.trim() === username?.toLowerCase()?.trim()
             const audio = new Audio(dis ? winnerAudio : boo)
             audio.play()
 
@@ -84,6 +88,9 @@ export default function TikTakBoard({scale, username, selectedType, setSelectedT
 
         socket.on("pageRefresh", (player) => {
             toast.error(`Other player restart the game`)
+            // navigate('/', {
+            //     replace: true
+            // })
             restartGame()
         })
 

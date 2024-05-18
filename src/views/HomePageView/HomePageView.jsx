@@ -23,6 +23,8 @@ const HomePageView = () => {
         const roomName = randomstring.generate(7)
         const player = isHost ? code : uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: ' ', })
 
+        localStorage.setItem("player", player)
+
         socket.emit('connectRoom', isHost ? `${roomName}-${player}` : `${roomCode}-${player}`)
 
         navigate(`/game-room`, {
@@ -71,8 +73,8 @@ const HomePageView = () => {
             <div className="w-75 d-center flex-column">
                 <div className="flex align-items-end flex-column">
                     <motion.h1
-                        style={{ fontSize: '5rem' }}
-                        className="text-large"
+                        // style={{ fontSize: '5rem' }}
+                        className="text-5xl md:text-8xl lg:text-8xl"
                         variants={titleVariants}
                         initial="hidden"
                         animate="visible"
@@ -80,7 +82,7 @@ const HomePageView = () => {
                         Tic Tac Toe
                     </motion.h1>
                     <motion.h1
-                        style={{ fontSize: '1.2rem' }}
+                        className="text-md md:text-lg lg:text-lg"
                         variants={subtitleVariants}
                         initial="hidden"
                         animate="visible"
@@ -100,7 +102,7 @@ const HomePageView = () => {
                                     whileTap={{ scale: 0.9 }}
                                     whileHover={{ scale: 1.06 }}
                                     onClick={() => handleJoinClick(uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: ' ', }), true)}
-                                    className="bg-black w-25 py-5 px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
+                                    className="bg-black custom-btn py-5 px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
                                 >
                                     HOST NEW GAME
                                 </motion.button>
@@ -112,7 +114,7 @@ const HomePageView = () => {
                                     whileTap={{ scale: 0.9 }}
                                     whileHover={{ scale: 1.06 }}
                                     onClick={() => setShowJoinForm(true)}
-                                    className="bg-black w-25 py-5 px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
+                                    className="bg-black custom-btn py-5 px-4 rounded-md duration-75 hover:px-16 text-white text-lg"
                                 >
                                     JOIN A GAME
                                 </motion.button>
