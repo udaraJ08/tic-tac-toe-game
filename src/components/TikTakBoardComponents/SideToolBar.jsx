@@ -7,6 +7,7 @@ import HamburgerSVG from "../../assets/svg/HamburgurSVG";
 import {socket} from "../../contexts/WebsocketContext";
 import EmojiButtonSet from "./EmojiButtonSet";
 import ButtonsList from "./AudioBtnList";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export default function SideToolBar({
                                         setScale,
@@ -18,6 +19,8 @@ export default function SideToolBar({
                                     }) {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const controls = useAnimation();
+    const location = useLocation();
+    const navigate = useNavigate()
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
@@ -26,6 +29,13 @@ export default function SideToolBar({
 
     const restartGame = () => {
         socket.emit('restartMsg')
+    };
+
+    const backToHome = () => {
+        socket.emit('playerLeft', location.state.code)
+        navigate('/', {
+            replace: true
+        })
     };
 
 
@@ -64,7 +74,7 @@ export default function SideToolBar({
                         </motion.button>
 
                         <motion.button
-                            onClick={restartGame}
+                            onClick={backToHome}
                             className="px-6 py-3 bg-gradient-to-r from-rose-700 to-rose-500 text-white rounded-md shadow-md"
                             animate={{ opacity: 1, translateY: 0, animationDelay: 1 }}
                             initial={{ opacity: 0, translateY: 4 }}

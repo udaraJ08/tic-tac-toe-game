@@ -21,13 +21,14 @@ const HomePageView = () => {
 
         const roomName = randomstring.generate(7)
 
-        socket.emit('connectRoom', roomName)
+        socket.emit('connectRoom', isHost ? `${roomName}-${code}` : `${roomCode}-${code}`)
 
         navigate(`/game-room`, {
             state: {
                 name: code,
                 code: isHost ? roomName : roomCode
-            }
+            },
+            replace: true
         });
     };
 

@@ -12,3 +12,10 @@ export const initBoard = [
     { number: 8, type: null, name: null },
     { number: 9, type: null, name: null },
 ];
+
+export const HAHA_EFFECT = 'HAHA_EFFECT';
+export const   BOO_EFFECT = 'BOO_EFFECT';
+export const    YAY_EFFECT = 'YAY_EFFECT';
+export const   COOL_EFFECT = 'COOL_EFFECT';
+export const   HMM_EFFECT = 'HMM_EFFECT';
+export const   GOOD_EFFECT = 'GOOD_EFFECT';
